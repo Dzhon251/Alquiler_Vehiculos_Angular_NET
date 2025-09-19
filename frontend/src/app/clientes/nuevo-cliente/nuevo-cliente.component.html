@@ -1,1 +1,35 @@
-<p>nuevo-cliente.component works!</p>
+<div class="container">
+  <h1>{{tituloFormulario}}</h1>
+  <form [formGroup]="clienteforms" (ngSubmit)="guardarCliente()" novalidate>
+    <div class="form-group">
+      <label for="nombre">Nombre</label>
+      <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" />
+      <div class="invalid-feedback d-block" *ngIf="
+          clienteforms.get('nombre')?.touched &&
+          clienteforms.get('nombre')?.invalid
+        ">
+        El nombre es requerido.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="apellido">Apellido</label>
+      <input formControlName="apellido" type="text" class="form-control" id="apellido" placeholder="Apellido" />
+      <p class="help-block">Ingrese los apellidos del cliente</p>
+    </div>
+    <div class="form-group">
+      <label for="licencia">Licencia</label>
+      <input formControlName="licencia" type="text" class="form-control" id="licencia" placeholder="Dirección" />
+      <p class="help-block">Ingrese la Licencia del cliente</p>
+    </div>
+    <div class="form-group">
+      <label for="telefono">Teléfono</label>
+      <input formControlName="telefono" type="text" class="form-control" id="telefono" placeholder="Teléfono" />
+      <p class="help-block">Ingrese el teléfono del cliente</p>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!clienteforms.valid">
+      Guardar
+    </button>
+
+    <button class="btn btn-secondary" routerLink="/">Cancelar</button>
+  </form>
+</div>

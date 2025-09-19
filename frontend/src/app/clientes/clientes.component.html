@@ -1,1 +1,44 @@
-<p>clientes.component works!</p>
+<div class="container-md">
+  <div class="row">
+    <button type="button" class="btn btno-utline-dark" routerLink="/nuevo-cliente">
+      Nuevo Cliente
+    </button>
+
+    <div class="header">
+      <h1>
+        <h1>Lista de Clientes</h1>
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-responsive table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Licencia</th>
+          <th>Telefono</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of listaClientes; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellido }}</td>
+          <td>{{ cliente.licencia }}</td>
+          <td>{{ cliente.telefono }}</td>
+          <td>
+            <button class="btn btn-outline-success" routerLink="/editar-cliente/{{ cliente.id }}">
+              Editar
+            </button>
+            <button class="btn btn-outline-danger" (click)="eliminarCliente(cliente.id!)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

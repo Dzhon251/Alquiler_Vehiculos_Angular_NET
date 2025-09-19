@@ -91,9 +91,8 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Disponible")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Disponible")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Marca")
                         .IsRequired()

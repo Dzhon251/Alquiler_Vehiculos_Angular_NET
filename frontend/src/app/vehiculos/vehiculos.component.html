@@ -1,1 +1,42 @@
-<p>vehiculos.component works!</p>
+<div class="container-md">
+    <div class="row">
+        <button type="button" class="btn btn-outline-dark" routerLink="/nuevo-vehiculo">
+            Nuevo Vehículo
+        </button>
+
+        <div class="header">
+            <h1>Lista de Vehículos</h1>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-responsive table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Año</th>
+                    <th>Disponible</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let vehiculo of listaVehiculos; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ vehiculo.marca }}</td>
+                    <td>{{ vehiculo.modelo }}</td>
+                    <td>{{ vehiculo.anio }}</td>
+                    <td>{{ vehiculo.disponible }}</td>
+                    <td>
+                        <button class="btn btn-outline-success" routerLink="/editar-vehiculo/{{ vehiculo.id }}">
+                            Editar
+                        </button>
+                        <button class="btn btn-outline-danger" (click)="eliminarVehiculo(vehiculo.id!)">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

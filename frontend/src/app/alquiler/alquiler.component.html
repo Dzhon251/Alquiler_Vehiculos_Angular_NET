@@ -1,1 +1,42 @@
-<p>alquiler.component works!</p>
+<div class="container-md">
+  <div class="row">
+    <button type="button" class="btn btno-utline-dark" routerLink="/nuevo-alquiler">
+      Nuevo Alquiler
+    </button>
+
+    <div class="header">
+      <h1>Lista de Alquileres</h1>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-responsive table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Fecha de Alquiler</th>
+          <th>Código</th>
+          <th>Cliente</th>
+          <th>Vehículo</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alquiler of listaAlquileres; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ alquiler.fechaAlquiler | date:'dd/MM/yyyy' }}</td>
+          <td>{{ alquiler.codigo_Alquiler }}</td>
+          <td>{{ alquiler.clientesModel.nombre }} {{ alquiler.clientesModel.apellido }}</td>
+          <td>{{ alquiler.vehiculoModel.marca }} {{ alquiler.vehiculoModel.modelo }} ({{ alquiler.vehiculoModel.anio }})</td>
+          <td>
+            <button class="btn btn-outline-success" routerLink="/editar-alquiler/{{ alquiler.id }}">
+              Editar
+            </button>
+            <button class="btn btn-outline-danger" (click)="eliminarAlquiler(alquiler.id!)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

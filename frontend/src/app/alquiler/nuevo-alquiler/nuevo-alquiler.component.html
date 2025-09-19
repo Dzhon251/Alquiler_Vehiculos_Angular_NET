@@ -1,1 +1,47 @@
-<p>nuevo-alquiler.component works!</p>
+<div class="container">
+  <h1>{{tituloFormulario}}</h1>
+  <form [formGroup]="alquilerForm" (ngSubmit)="guardarAlquiler()" novalidate>
+    <div class="form-group">
+      <label for="fechaAlquiler">Fecha de Alquiler</label>
+      <input formControlName="fechaAlquiler" type="date" class="form-control" id="fechaAlquiler" placeholder="Fecha de Alquiler" />
+      <div class="invalid-feedback d-block" *ngIf="alquilerForm.get('fechaAlquiler')?.touched && alquilerForm.get('fechaAlquiler')?.invalid">
+        La fecha de alquiler es requerida.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="codigo_Alquiler">Código de Alquiler</label>
+      <input formControlName="codigo_Alquiler" type="text" class="form-control" id="codigo_Alquiler" placeholder="Código de Alquiler" />
+      <div class="invalid-feedback d-block" *ngIf="alquilerForm.get('codigo_Alquiler')?.touched && alquilerForm.get('codigo_Alquiler')?.invalid">
+        El código es requerido.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="clienteModelId">Cliente</label>
+      <select formControlName="clienteModelId" class="form-control" id="clienteModelId">
+        <option value="" disabled>Seleccione un cliente</option>
+        <option *ngFor="let cliente of listaClientes" [value]="cliente.id">
+          {{cliente.nombre}} {{cliente.apellido}}
+        </option>
+      </select>
+      <div class="invalid-feedback d-block" *ngIf="alquilerForm.get('clienteModelId')?.touched && alquilerForm.get('clienteModelId')?.invalid">
+        Debe seleccionar un cliente.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="vehiculoModelId">Vehículo</label>
+      <select formControlName="vehiculoModelId" class="form-control" id="vehiculoModelId">
+        <option value="" disabled>Seleccione un vehículo</option>
+        <option *ngFor="let vehiculo of listaVehiculos" [value]="vehiculo.id">
+          {{vehiculo.marca}} {{vehiculo.modelo}} ({{vehiculo.anio}})
+        </option>
+      </select>
+      <div class="invalid-feedback d-block" *ngIf="alquilerForm.get('vehiculoModelId')?.touched && alquilerForm.get('vehiculoModelId')?.invalid">
+        Debe seleccionar un vehículo.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!alquilerForm.valid">
+      Guardar
+    </button>
+    <button class="btn btn-secondary" routerLink="/admin/alquiler">Cancelar</button>
+  </form>
+</div>

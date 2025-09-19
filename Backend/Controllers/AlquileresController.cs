@@ -25,34 +25,39 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Alquileres>>> GetAlquileres()
         {
-            return await _context.Alquileres.ToListAsync();
+            return await _context.Alquileres
+                .Include(a => a.ClientesModel)
+                .Include(a => a.VehiculoModel)
+                .ToListAsync();
         }
 
         // GET: api/Alquileres/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Alquileres>> GetAlquileres(int id)
+        public async Task<ActionResult<Alquileres>> GetAlquiler(int id)
         {
-            var alquileres = await _context.Alquileres.FindAsync(id);
+            var alquiler = await _context.Alquileres
+                .Include(a => a.ClientesModel)
+                .Include(a => a.VehiculoModel)
+                .FirstOrDefaultAsync(a => a.Id == id);
 
-            if (alquileres == null)
+            if (alquiler == null)
             {
                 return NotFound();
             }
 
-            return alquileres;
+            return alquiler;
         }
 
         // PUT: api/Alquileres/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAlquileres(int id, Alquileres alquileres)
+        public async Task<IActionResult> PutAlquiler(int id, Alquileres alquiler)
         {
-            if (id != alquileres.Id)
+            if (id != alquiler.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(alquileres).State = EntityState.Modified;
+            _context.Entry(alquiler).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +65,7 @@ namespace Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AlquileresExists(id))
+                if (!AlquilerExists(id))
                 {
                     return NotFound();
                 }
@@ -74,33 +79,37 @@ namespace Backend.Controllers
         }
 
         // POST: api/Alquileres
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Alquileres>> PostAlquileres(Alquileres alquileres)
+        public async Task<ActionResult<Alquileres>> PostAlquiler(Alquileres alquiler)
         {
-            _context.Alquileres.Add(alquileres);
+            _context.Alquileres.Add(alquiler);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAlquileres", new { id = alquileres.Id }, alquileres);
+            var createdAlquiler = await _context.Alquileres
+                .Include(a => a.ClientesModel)
+                .Include(a => a.VehiculoModel)
+                .FirstOrDefaultAsync(a => a.Id == alquiler.Id);
+
+            return CreatedAtAction("GetAlquiler", new { id = alquiler.Id }, createdAlquiler);
         }
 
         // DELETE: api/Alquileres/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAlquileres(int id)
+        public async Task<IActionResult> DeleteAlquiler(int id)
         {
-            var alquileres = await _context.Alquileres.FindAsync(id);
-            if (alquileres == null)
+            var alquiler = await _context.Alquileres.FindAsync(id);
+            if (alquiler == null)
             {
                 return NotFound();
             }
 
-            _context.Alquileres.Remove(alquileres);
+            _context.Alquileres.Remove(alquiler);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AlquileresExists(int id)
+        private bool AlquilerExists(int id)
         {
             return _context.Alquileres.Any(e => e.Id == id);
         }
